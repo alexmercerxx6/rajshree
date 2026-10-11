@@ -41,6 +41,6 @@ export default defineEventHandler(async (event) => {
     logger.warn('AUTH', `Login failed (Invalid credentials)`, { username, ip });
     throw createError({
         statusCode: 401,
-        statusMessage: 'Invalid credentials. Please enter username: adminlogin and password: rajsree101',
+        statusMessage: 'Invalid credentials',
     });
 });
