@@ -1,10 +1,14 @@
 <template>
   <div class="admin-login">
     <div class="login-card">
-      <div class="card-header">Sign In</div>
+      <div class="card-header">
+        <h2>Admin Sign In</h2>
+        <NuxtLink to="/" class="back-link">← Back to Board</NuxtLink>
+      </div>
       <div class="card-body">
         <form @submit.prevent="handleLogin" autocomplete="on">
           <div class="form-group">
+            <label for="username">Username</label>
             <input
               v-model="username"
               type="text"
@@ -14,9 +18,11 @@
               placeholder="Username"
               class="form-control"
               :disabled="isSubmitting"
+              required
             />
           </div>
           <div class="form-group">
+            <label for="password">Password</label>
             <input
               v-model="password"
               type="password"
@@ -26,6 +32,7 @@
               placeholder="Password"
               class="form-control"
               :disabled="isSubmitting"
+              required
             />
           </div>
           <div class="form-group checkbox">
@@ -57,7 +64,7 @@ const router = useRouter();
 onMounted(async () => {
   await checkAuth();
   if (isAuthenticated.value) {
-    navigateTo("/admin/add");
+    router.push("/admin/add");
   }
 });
 
@@ -73,7 +80,7 @@ const handleLogin = async () => {
 
   try {
     await login(username.value.trim(), password.value.trim(), rememberMe.value);
-    navigateTo("/admin/add");
+    await router.push("/admin/add");
   } catch (e: any) {
     error.value = e.message || "Invalid credentials";
   } finally {
@@ -88,89 +95,124 @@ const handleLogin = async () => {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #f5f5f5;
-  font-family:
-    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background-color: #0f1115;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
 .login-card {
   width: 100%;
-  max-width: 400px;
-  background: white;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+  max-width: 420px;
+  background: #161a22;
+  border: 1px solid #222836;
+  border-radius: 8px;
   overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
 }
 
 .card-header {
-  background: #f7f7f7;
-  border-bottom: 1px solid #ddd;
-  padding: 15px 20px;
+  background: #1c2230;
+  border-bottom: 1px solid #222836;
+  padding: 16px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-header h2 {
   font-size: 18px;
-  color: #333;
+  color: #f3f4f6;
+  margin: 0;
+  font-weight: 600;
+}
+
+.back-link {
+  color: #60a5fa;
+  font-size: 13px;
+  text-decoration: none;
+}
+
+.back-link:hover {
+  text-decoration: underline;
 }
 
 .card-body {
-  padding: 20px;
+  padding: 24px;
 }
 
 .form-group {
-  margin-bottom: 15px;
+  margin-bottom: 18px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: #9ca3af;
+  margin-bottom: 6px;
 }
 
 .form-control {
   width: 100%;
-  padding: 10px 12px;
+  padding: 10px 14px;
   font-size: 14px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  background: #0d1117;
+  color: #f3f4f6;
+  border: 1px solid #2a3142;
+  border-radius: 6px;
   box-sizing: border-box;
+  transition: border-color 0.15s;
 }
 
 .form-control:focus {
   outline: none;
-  border-color: #66afe9;
-  box-shadow: 0 0 0 3px rgba(102, 175, 233, 0.25);
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
 }
 
 .checkbox {
   display: flex;
   align-items: center;
-  gap: 5px;
 }
 
 .checkbox label {
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 8px;
   cursor: pointer;
-  font-size: 14px;
-  color: #666;
+  font-size: 13px;
+  color: #9ca3af;
+  margin-bottom: 0;
 }
 
 .error-message {
-  color: #dc3545;
-  font-size: 14px;
-  margin-bottom: 15px;
-  padding: 10px;
-  background: #f8d7da;
-  border-radius: 4px;
+  color: #f87171;
+  font-size: 13px;
+  margin-bottom: 18px;
+  padding: 10px 14px;
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: 6px;
 }
 
 .btn-login {
-  width: auto;
-  padding: 8px 16px;
-  background-color: #337ab7;
-  color: white;
-  border: none;
-  border-radius: 4px;
+  width: 100%;
+  padding: 11px 16px;
+  background-color: #0000c8;
+  color: #ffff00;
+  font-weight: 700;
+  border: 1px solid #ffff00;
+  border-radius: 6px;
   font-size: 14px;
   cursor: pointer;
-  transition: background-color 0.2s;
+  text-transform: uppercase;
+  transition: all 0.2s;
 }
 
 .btn-login:hover:not(:disabled) {
-  background-color: #286090;
+  background-color: #1a1aff;
+  box-shadow: 0 0 12px rgba(255, 255, 0, 0.35);
 }
 
 .btn-login:disabled {

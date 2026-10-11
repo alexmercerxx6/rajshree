@@ -4,7 +4,15 @@ import { supabase } from '../../utils/supabase';
 export default defineEventHandler(async (event) => {
     // Check auth
     const authCookie = getCookie(event, 'admin_auth');
-    if (authCookie !== 'authenticated') {
+    const authHeader = getHeader(event, 'authorization');
+    const customHeader = getHeader(event, 'x-admin-auth');
+
+    const isAuth =
+        authCookie === 'authenticated' ||
+        authHeader === 'Bearer authenticated' ||
+        customHeader === 'authenticated';
+
+    if (!isAuth) {
         throw createError({
             statusCode: 401,
             statusMessage: 'Unauthorized',

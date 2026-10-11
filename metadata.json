@@ -1,0 +1,7 @@
+{
+  "name": "Rajshree",
+  "description": "Live answers board and archives for Rajshree with RA, RB, RC, RD, and RE results.",
+  "capabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

@@ -12,24 +12,29 @@ export const useResults = () => {
     const pollingInterval = ref<NodeJS.Timeout | null>(null);
     const lastWriteTime = ref<number>(0); // Track when we last wrote to DB
 
+    const getAuthHeaders = () => {
+        let token = '';
+        if (import.meta.client) {
+            try {
+                token = localStorage.getItem('admin_token') || '';
+            } catch {}
+        }
+        return token ? { 'Authorization': `Bearer ${token}`, 'x-admin-auth': token } : {};
+    };
+
     // Fetch today's results
     const fetchResults = async (showLoading = true) => {
         if (showLoading) isLoading.value = true;
         try {
-            // Add time-bucket to query to bust browser cache every 3 seconds
-            // This forces the browser to check the network/edge cache instead of its local cache
-            const bucket = Math.floor(Date.now() / 3000); // Change URL every 3 seconds
+            const bucket = Math.floor(Date.now() / 3000);
             const data = await $fetch<{ results: ResultEntry[], date: string }>('/api/results', {
                 query: { _t: bucket }
             });
             if (data) {
-                // SMART LOGIC: If we recently wrote data (within 10s), DO NOT accept a list that is smaller/stale
-                // This prevents the "disappearing data" bug caused by SWR cache
                 const timeSinceWrite = Date.now() - lastWriteTime.value;
-                const isWriting = timeSinceWrite < 10000; // 10 seconds protection
+                const isWriting = timeSinceWrite < 10000;
 
                 if (isWriting && data.results.length < results.value.length) {
-                    console.log("Ignoring stale cache update (Protected by Smart Logic)");
                     return;
                 }
 
@@ -46,13 +51,10 @@ export const useResults = () => {
 
     // Start polling for results
     const startPolling = (intervalMs = 3000) => {
-        // Initial fetch
         fetchResults(true);
 
-        // Clear any existing interval
         if (pollingInterval.value) clearInterval(pollingInterval.value);
 
-        // Start new interval
         pollingInterval.value = setInterval(() => {
             fetchResults(false);
         }, intervalMs);
@@ -72,27 +74,24 @@ export const useResults = () => {
     });
 
     // Add a result
-    const addResult = async (timeSlot: string, codes: Record<string, string>) => {
+    const addResult = async (timeSlot: string, codes: Record<string, string>, customDate?: string) => {
         try {
             const data = await $fetch<{ success: boolean, result: ResultEntry }>('/api/results/add', {
                 method: 'POST',
-                body: { timeSlot, ...codes },
+                headers: getAuthHeaders(),
+                body: { timeSlot, date: customDate, ...codes },
             });
 
-
-
-            // Manually update state (Optimistic update) to avoid hitting stale cache
             if (data && data.result) {
-                lastWriteTime.value = Date.now(); // Mark this write timestamp
+                lastWriteTime.value = Date.now();
                 results.value.push(data.result);
-                // Sort results by time
                 results.value.sort((a, b) => a.timeSlot.localeCompare(b.timeSlot));
                 usedSlots.value.push(data.result.timeSlot);
             }
 
             return data;
         } catch (error: any) {
-            throw new Error(error?.data?.message || error?.statusMessage || 'Failed to add result');
+            throw new Error(error?.data?.statusMessage || error?.data?.message || error?.statusMessage || 'Failed to add result');
         }
     };
 
@@ -101,11 +100,11 @@ export const useResults = () => {
         try {
             await $fetch(`/api/results/delete/${id}`, {
                 method: 'DELETE',
+                headers: getAuthHeaders(),
             });
-            // Refresh results
             await fetchResults(false);
         } catch (error: any) {
-            throw new Error(error?.data?.message || error?.statusMessage || 'Failed to delete result');
+            throw new Error(error?.data?.statusMessage || error?.data?.message || error?.statusMessage || 'Failed to delete result');
         }
     };
 
