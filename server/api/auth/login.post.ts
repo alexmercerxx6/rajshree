@@ -8,7 +8,7 @@ export default defineEventHandler(async (event) => {
 
     // Hardcoded admin credentials
     const ADMIN_USERNAME = 'adminlogin';
-    const ADMIN_PASSWORD = 'bhagya101$';
+    const ADMIN_PASSWORD = 'rajsree101';
 
     if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
         logger.info('AUTH', `Login successful`, { username, ip });

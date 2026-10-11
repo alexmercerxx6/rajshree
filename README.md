@@ -1,4 +1,4 @@
-# GoBhagyalaxmi
+# Rajsree
 
 A Nuxt 4 application for managing lottery results.
 
@@ -78,7 +78,7 @@ npm run dev
 ## 🔑 Default Credentials
 
 - **Username**: `adminlogin`
-- **Password**: `bhagya101$`
+- **Password**: `rajsree101`
 
 ## Daily Reset Logic
 
