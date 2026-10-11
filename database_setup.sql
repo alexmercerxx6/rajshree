@@ -4,16 +4,11 @@ create table public.results (
   date date not null,
   time_slot text not null,
   display_time text not null,
-  xa text not null,
-  xb text not null,
-  xc text not null,
-  xd text not null,
-  xe text not null,
-  xf text not null,
-  xg text not null,
-  xh text not null,
-  xi text not null,
-  xj text not null,
+  ra text not null,
+  rb text not null,
+  rc text not null,
+  rd text not null,
+  re text not null,
   created_at timestamptz default now()
 );
 

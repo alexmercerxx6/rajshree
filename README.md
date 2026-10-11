@@ -1,4 +1,4 @@
-# Rajsree
+# Rajsril
 
 A Nuxt 4 application for managing lottery results.
 
@@ -54,8 +54,8 @@ drop table results;
 Then insert the updated data
 
 ```sql
-INSERT INTO results (date, time_slot, display_time, xa, xb, xc, xd, xe, xf, xg, xh, xi, xj)
-VALUES ('2025-12-07', '09:00', '09:00 A.M', '01', '23', '45', '67', '89', '12', '34', '56', '78', '90');
+INSERT INTO results (date, time_slot, display_time, ra, rb, rc, rd, re)
+VALUES ('2025-12-07', '09:00', '10:40 A.M', 'RA01', 'RB23', 'RC45', 'RD67', 'RE89');
 ```
 
 3. Get your **Project URL** and **Secret Key** from Project Settings → API Keys
@@ -77,8 +77,8 @@ npm run dev
 
 ## 🔑 Default Credentials
 
-- **Username**: `adminlogin`
-- **Password**: `rajsree101`
+- **Username**: `yryr2020@outlook.com`
+- **Password**: `yryr2020`
 
 ## Daily Reset Logic
 
