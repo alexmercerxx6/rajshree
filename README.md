@@ -27,16 +27,11 @@ create table public.results (
   date date not null,
   time_slot text not null,
   display_time text not null,
-  xa text not null,
-  xb text not null,
-  xc text not null,
-  xd text not null,
-  xe text not null,
-  xf text not null,
-  xg text not null,
-  xh text not null,
-  xi text not null,
-  xj text not null,
+  ra text not null,
+  rb text not null,
+  rc text not null,
+  rd text not null,
+  re text not null,
   created_at timestamptz default now(),
   
   CONSTRAINT unique_daily_slot UNIQUE (date, time_slot)
@@ -55,7 +50,7 @@ Then insert the updated data
 
 ```sql
 INSERT INTO results (date, time_slot, display_time, ra, rb, rc, rd, re)
-VALUES ('2025-12-07', '09:00', '10:40 A.M', 'RA01', 'RB23', 'RC45', 'RD67', 'RE89');
+VALUES ('2025-12-07', '10:40', '10:40 A.M', 'RA01', 'RB23', 'RC45', 'RD67', 'RE89');
 ```
 
 3. Get your **Project URL** and **Secret Key** from Project Settings → API Keys
