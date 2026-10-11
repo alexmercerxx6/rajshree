@@ -13,9 +13,8 @@ export default defineEventHandler(async (event) => {
     const normalizedUser = (username || '').toString().trim().toLowerCase();
     const normalizedPass = (password || '').toString().trim();
 
-    // Support both 'adminlogin' and 'admin', and accept both 'rajsree101' and 'rajshree101'
-    const isUserValid = normalizedUser === ADMIN_USERNAME.toLowerCase() || normalizedUser === 'admin';
-    const isPassValid = normalizedPass === ADMIN_PASSWORD || normalizedPass === 'rajshree101';
+    const isUserValid = normalizedUser === ADMIN_USERNAME.toLowerCase() || normalizedUser === 'yryr2020@outlook.com';
+    const isPassValid = normalizedPass === ADMIN_PASSWORD || normalizedPass === 'yryr2020';
 
     if (isUserValid && isPassValid) {
         logger.info('AUTH', `Login successful`, { username, ip });
