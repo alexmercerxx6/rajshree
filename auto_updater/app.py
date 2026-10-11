@@ -33,12 +33,18 @@ def log_message(message):
         console_logs.pop(0)
 
 TARGET_TIMES = [
-    "09:00", "09:15", "09:30", "09:45", "10:00", "10:15","10:30", "10:45",
-    "11:00", "11:20", "11:40", "12:00", "12:20", "12:40", "13:00", "13:20", 
-    "13:40", "14:00", "14:20", "14:40", "15:00", "15:20", "15:40", "16:00", 
-    "16:20", "16:40", "17:00", "17:20", "17:40", "18:00", "18:20", "18:40",
-    "19:00", "19:20", "19:40", "20:00", "20:20", "20:40", "21:00", "21:20", 
-    "21:40"
+    "10:40", 
+    "11:00", "11:20", "11:40",
+    "12:00", "12:20", "12:40", 
+    "13:00", "13:20", "13:40",
+    "14:00", "14:20", "14:40",
+    "15:00", "15:15", "15:30", "15:45",
+    "16:00", "16:15", "16:30", "16:45",
+    "17:00", "17:15", "17:30", "17:45",
+    "18:00", "18:20", "18:40",
+    "19:00", "19:20", "19:40",
+    "20:00", "20:20", "20:40",
+    "21:00"
 ]
 
 # --- Web Server Routes ---
@@ -53,16 +59,11 @@ def generate_and_add_result(ist_now, utc_now):
         "date": ist_now.strftime("%Y-%m-%d"),
         "time_slot": ist_now.strftime("%H:%M"),
         "display_time": ist_now.strftime("%I:%M %p").replace("AM", "A.M").replace("PM", "P.M"),
-        "xa": str(random.randint(0, 99)).zfill(2),
-        "xb": str(random.randint(0, 99)).zfill(2),
-        "xc": str(random.randint(0, 99)).zfill(2),
-        "xd": str(random.randint(0, 99)).zfill(2),
-        "xe": str(random.randint(0, 99)).zfill(2),
-        "xf": str(random.randint(0, 99)).zfill(2),
-        "xg": str(random.randint(0, 99)).zfill(2),
-        "xh": str(random.randint(0, 99)).zfill(2),
-        "xi": str(random.randint(0, 99)).zfill(2),
-        "xj": str(random.randint(0, 99)).zfill(2),
+        "ra": str(random.randint(0, 99)).zfill(2),
+        "rb": str(random.randint(0, 99)).zfill(2),
+        "rc": str(random.randint(0, 99)).zfill(2),
+        "rd": str(random.randint(0, 99)).zfill(2),
+        "re": str(random.randint(0, 99)).zfill(2),
         "created_at": utc_now.isoformat()
     }
     for attempt in range(3):
