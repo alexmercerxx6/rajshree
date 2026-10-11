@@ -7,8 +7,8 @@ export default defineEventHandler(async (event) => {
     const ip = getRequestIP(event);
 
     // Configured admin credentials
-    const ADMIN_USERNAME = 'adminlogin';
-    const ADMIN_PASSWORD = 'rajsree101';
+    const ADMIN_USERNAME = 'yryr2020@outlook.com';
+    const ADMIN_PASSWORD = 'yryr2020';
 
     const normalizedUser = (username || '').toString().trim().toLowerCase();
     const normalizedPass = (password || '').toString().trim();
